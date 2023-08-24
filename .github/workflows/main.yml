@@ -17,12 +17,12 @@ jobs:
     - uses: actions/checkout@v2
       
     - name: Install Python packages
+      if: matrix.os == 'ubuntu-latest'
       run: |
-        if [ "${{ matrix.os }}" = "ubuntu-latest" ]; then
-          pip install -r heic2jpg/requirements.txt
-        elif [ "${{ matrix.os }}" = "windows-latest" ]; then
-          pip install -r heic2jpg/requirements.txt
-        fi
+        pip install -r heic2jpg/requirements.txt
+      if: matrix.os == 'windows-latest'
+      run: |
+        pip install -r heic2jpg/requirements.txt
       
     - name: Build with Make
       run: |
