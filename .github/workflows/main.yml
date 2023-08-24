@@ -1,0 +1,36 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+
+    steps:
+    - uses: actions/checkout@v2
+      
+    - name: Install Python packages
+      run: |
+        if [ "${{ matrix.os }}" = "ubuntu-latest" ]; then
+          pip install -r requirements.txt
+        elif [ "${{ matrix.os }}" = "windows-latest" ]; then
+          pip install -r requirements.txt
+        fi
+      
+    - name: Build with Make
+      run: |
+        cd heic2jpg
+        make
+        
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: heic2jpg
+        path: heic2jpg/dist/heic2jpg${{ matrix.os == 'windows-latest' && '.exe' || '' }}
