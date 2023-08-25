@@ -29,4 +29,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: heic2jpg
-        path: heic2jpg/dist/heic2jpg${{ matrix.os == 'windows-latest' && '.exe' || '' }}
+        path: heic2jpg/dist/heic2jpg_gui_2${{ matrix.os == 'windows-latest' && '.exe' || '' }}
